@@ -1,0 +1,49 @@
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+#content {
+    padding: 30px;
+}
+
+@media (max-width: 768px) {
+    .app {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    #content {
+        padding: 20px;
+    }
+}

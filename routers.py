@@ -23,7 +23,8 @@ def listar_alunos(db: Session = Depends(get_db)):
             "id": aluno.id,
             "nome": aluno.nome,
             "media": round(aluno.media, 2),
-            "notas": [nota.valor for nota in aluno.notas]
+            "notas": [nota.valor for nota in aluno.notas],
+            "status": verificar_status(aluno.media)
         })
 
     return resposta(True, resultado)
