@@ -18,6 +18,40 @@ function renderizarAlunos(alunos) {
         `;
     }
 
+    const alunosPorSerie = {};
+
+    alunos.forEach(aluno => {
+        if (!alunosPorSerie[aluno.serie]) {
+            alunosPorSerie[aluno.serie] = [];
+        }
+
+        alunosPorSerie[aluno.serie].push(aluno);
+    });
+
+    return `
+        <div class="series-container">
+            ${Object.entries(alunosPorSerie).map(([serie, alunosSerie]) => `
+                <div class="serie-card" data-serie="${serie}">
+                    <h3>${serie}</h3>
+                    <p>
+                        ${alunosSerie.length}
+                        ${alunosSerie.length === 1 ? "aluno" : "alunos"}
+                    </p>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+function renderizarTabelaAlunos(alunos) {
+    if (alunos.length === 0) {
+        return `
+            <div class="empty-state">
+                <h3>Nenhum aluno nesta série</h3>
+            </div>
+        `;
+    }
+
     return `
         <div class="alunos-table-container">
             <table class="alunos-table">
@@ -106,14 +140,26 @@ function renderizarFormularioAluno() {
             </div>
 
             <div>
+                <label for="serieAluno">Série</label>
+                <input
+                    type="text"
+                    id="serieAluno"
+                    placeholder="Ex: 4º ano"
+                >
+            </div>
+
+            <div>
                 <label for="notasAluno">Notas</label>
                 <input
                     type="text"
                     id="notasAluno"
                     placeholder="Ex: 7.89, 8, 6.5, 9"
-                    >
+                >
 
-                    <small>Separe as notas por vírgula e use ponto (.) para casas decimais. Ex: 7.89, 8, 6.5, 9</small>
+                <small>
+                    Separe as notas por vírgula e use ponto (.) para casas decimais.
+                    Ex: 7.89, 8, 6.5, 9
+                </small>
             </div>
 
             <button class="btn-cadastrar">
@@ -125,6 +171,7 @@ function renderizarFormularioAluno() {
 
 function obterDadosFormularioAluno() {
     const nome = document.getElementById("nomeAluno").value.trim();
+    const serie = document.getElementById("serieAluno").value.trim();
     const notasTexto = document.getElementById("notasAluno").value;
 
     const notas = notasTexto
@@ -133,6 +180,7 @@ function obterDadosFormularioAluno() {
 
     return {
         nome,
+        serie,
         notas
     };
 }
@@ -147,6 +195,16 @@ function renderizarFormularioEdicao(aluno) {
                     type="text"
                     id="nomeEdicao"
                     value="${aluno.nome}"
+                >
+            </div>
+
+            <div>
+                <label for="serieEdicao">Série</label>
+                <input
+                    type="text"
+                    id="serieEdicao"
+                    value="${aluno.serie}"
+                    placeholder="Ex: 4º ano"
                 >
             </div>
 

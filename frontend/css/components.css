@@ -358,3 +358,18 @@
 .btn-excluir:hover {
     background-color: #fecaca;
 }
+
+.btn-baixar-relatorio {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-baixar-relatorio:hover {
+    background-color: #1565c0;
+}

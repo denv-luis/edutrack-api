@@ -60,6 +60,12 @@ class Aluno(BaseModel):
         description="Nome do aluno"
     )
 
+    serie: str = Field(
+        ...,
+        example="4º ano",
+        description="Serie escolar do aluno"
+    )
+
     notas: conlist(
         confloat(ge=0, le=10),
         min_length=1,
@@ -78,6 +84,7 @@ class AlunoDB(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, index=True)
+    serie = Column(String)
     media = Column(Float)
 
     notas = relationship(
@@ -119,5 +126,7 @@ def resposta(success: bool, data=None, error=None):
 
 
 from routers import router
+from auth import router as auth_router
 
 app.include_router(router)
+app.include_router(auth_router)

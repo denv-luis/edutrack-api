@@ -14,7 +14,56 @@
 
 <body>
 
-    <div class="app">
+    <!-- TELA DE LOGIN -->
+    <div id="login-screen">
+
+        <div class="login-container">
+
+            <h1>EduTrack</h1>
+
+            <p>Gestão de alunos</p>
+
+            <form id="login-form">
+
+                <div>
+                    <label for="login-usuario">Usuário</label>
+
+                    <input
+                        type="text"
+                        id="login-usuario"
+                        placeholder="Digite seu usuário"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label for="login-senha">Senha</label>
+
+                    <input
+                        type="password"
+                        id="login-senha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit">
+                    Entrar
+                </button>
+
+                <p id="login-erro"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- SISTEMA -->
+    <div class="app" id="app" style="display: none;">
 
         <!-- MENU LATERAL -->
         <aside class="sidebar">
@@ -34,9 +83,14 @@
                     Alunos
                 </button>
 
+                <button class="menu-item" id="btn-logout">
+                    Sair
+                </button>
+
             </nav>
 
         </aside>
+
 
         <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
@@ -46,15 +100,19 @@
             </header>
 
             <section id="content">
+
                 <h3>Bem-vindo ao EduTrack</h3>
+
                 <p>
                     Sistema de gerenciamento de alunos.
                 </p>
+
             </section>
 
         </main>
 
     </div>
+
 
     <script src="/js/config.js"></script>
     <script src="/js/api.js"></script>
