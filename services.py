@@ -1,5 +1,6 @@
 # ------------------ LÓGICA ---------------------------------------
 
+
 def calcular_media(notas):
     media = sum(notas) / len(notas)
     return round(media, 2)

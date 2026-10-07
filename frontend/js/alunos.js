@@ -8,7 +8,13 @@ async function carregarAlunos() {
     return resposta.data;
 }
 
+
+// ============================================================
+// LISTAGEM
+// ============================================================
+
 function renderizarAlunos(alunos) {
+
     if (alunos.length === 0) {
         return `
             <div class="empty-state">
@@ -43,7 +49,9 @@ function renderizarAlunos(alunos) {
     `;
 }
 
+
 function renderizarTabelaAlunos(alunos) {
+
     if (alunos.length === 0) {
         return `
             <div class="empty-state">
@@ -54,71 +62,125 @@ function renderizarTabelaAlunos(alunos) {
 
     return `
         <div class="alunos-table-container">
+
             <table class="alunos-table">
+
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Notas</th>
-                        <th>Média</th>
-                        <th>Status</th>
+                        <th>Disciplinas</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
 
                 <tbody>
+
                     ${alunos.map(aluno => `
+
                         <tr>
+
                             <td>${aluno.nome}</td>
-                            <td>${aluno.notas.join(", ")}</td>
-                            <td>${aluno.media}</td>
+
                             <td>
-                                <span class="status-badge ${aluno.status === "Aprovado" ? "status-aprovado" : "status-reprovado"}">
-                                    ${aluno.status}
-                                </span>
+                                ${aluno.disciplinas
+                                    .map(disciplina => disciplina.nome)
+                                    .join(", ")}
                             </td>
+
                             <td>
-                                <button class="btn-ver" data-id="${aluno.id}">
+
+                                <button
+                                    class="btn-ver"
+                                    data-id="${aluno.id}"
+                                >
                                     Ver
                                 </button>
 
-                                <button class="btn-editar" data-id="${aluno.id}">
+                                <button
+                                    class="btn-editar"
+                                    data-id="${aluno.id}"
+                                >
                                     Editar
                                 </button>
 
-                                <button class="btn-excluir" data-id="${aluno.id}">
+                                <button
+                                    class="btn-excluir"
+                                    data-id="${aluno.id}"
+                                >
                                     Excluir
                                 </button>
+
                             </td>
+
                         </tr>
+
                     `).join("")}
+
                 </tbody>
+
             </table>
+
         </div>
     `;
 }
 
+
+// ============================================================
+// DETALHES
+// ============================================================
+
 function renderizarDetalhesAluno(aluno) {
+
     return `
         <div class="aluno-detalhes">
 
             <div class="detalhes-header">
-                <h3>${aluno.nome}</h3>
 
-                <span class="status-badge ${aluno.status === "Aprovado" ? "status-aprovado" : "status-reprovado"}">
-                    ${aluno.status}
-                </span>
+                <div>
+                    <h3>${aluno.nome}</h3>
+                    <p>${aluno.serie}</p>
+                </div>
+
             </div>
 
-            <div class="detalhes-info">
-                <div>
-                    <span>Média</span>
-                    <strong>${aluno.media}</strong>
-                </div>
+            <div class="disciplinas-detalhes">
 
-                <div>
-                    <span>Notas</span>
-                    <strong>${aluno.notas.join(", ")}</strong>
-                </div>
+                <h4>Disciplinas</h4>
+
+                ${aluno.disciplinas.map(disciplina => `
+
+                    <div class="disciplina-detalhe">
+
+                        <div class="disciplina-detalhe-header">
+
+                            <strong>
+                                ${disciplina.nome}
+                            </strong>
+
+                            <span class="status-badge ${
+                                disciplina.status === "Aprovado"
+                                    ? "status-aprovado"
+                                    : "status-reprovado"
+                            }">
+                                ${disciplina.status}
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Notas:
+                            ${disciplina.notas.join(", ")}
+                        </p>
+
+                        <p>
+                            Média:
+                            <strong>${disciplina.media}</strong>
+                        </p>
+
+                    </div>
+
+                `).join("")}
+
             </div>
 
             <div class="detalhes-acoes">
@@ -131,16 +193,118 @@ function renderizarDetalhesAluno(aluno) {
     `;
 }
 
+
+// ============================================================
+// DISCIPLINA
+// ============================================================
+
+function criarFormularioDisciplina(disciplina = null) {
+
+    const nome =
+        disciplina ? disciplina.nome : "";
+
+    const notas =
+        disciplina && disciplina.notas.length
+            ? disciplina.notas
+            : [""];
+
+
+    return `
+        <div class="disciplina-form">
+
+            <div class="disciplina-header">
+
+                <label>Disciplina</label>
+
+                <button
+                    type="button"
+                    class="btn-remover-disciplina"
+                >
+                    Remover disciplina
+                </button>
+
+            </div>
+
+            <input
+                type="text"
+                class="nome-disciplina"
+                placeholder="Ex: Português"
+                value="${nome}"
+            >
+
+            <div class="notas-container">
+
+                <label>Notas</label>
+
+                <div class="notas-lista">
+
+                    ${notas.map(nota => `
+
+                        <div class="nota-item">
+
+                            <input
+                                type="number"
+                                class="nota-disciplina"
+                                min="0"
+                                max="10"
+                                step="0.01"
+                                placeholder="Nota"
+                                value="${nota}"
+                            >
+
+                            <button
+                                type="button"
+                                class="btn-remover-nota"
+                            >
+                                Remover
+                            </button>
+
+                        </div>
+
+                    `).join("")}
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-adicionar-nota"
+                >
+                    + Adicionar nota
+                </button>
+
+                <p class="nota-ajuda">
+                    Use ponto (.) para separar as casas decimais. Ex.:7.5
+                </p>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+// ============================================================
+// CADASTRO
+// ============================================================
+
 function renderizarFormularioAluno() {
+
     return `
         <div class="aluno-form">
+
             <div>
                 <label for="nomeAluno">Nome</label>
-                <input type="text" id="nomeAluno" placeholder="Nome do aluno">
+
+                <input
+                    type="text"
+                    id="nomeAluno"
+                    placeholder="Nome do aluno"
+                >
             </div>
 
             <div>
                 <label for="serieAluno">Série</label>
+
                 <input
                     type="text"
                     id="serieAluno"
@@ -149,75 +313,163 @@ function renderizarFormularioAluno() {
             </div>
 
             <div>
-                <label for="notasAluno">Notas</label>
-                <input
-                    type="text"
-                    id="notasAluno"
-                    placeholder="Ex: 7.89, 8, 6.5, 9"
-                >
 
-                <small>
-                    Separe as notas por vírgula e use ponto (.) para casas decimais.
-                    Ex: 7.89, 8, 6.5, 9
-                </small>
+                <label>Disciplinas</label>
+
+                <div id="disciplinasAluno">
+
+                    ${criarFormularioDisciplina()}
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-adicionar-disciplina"
+                >
+                    + Adicionar disciplina
+                </button>
+
             </div>
 
             <button class="btn-cadastrar">
                 Cadastrar aluno
             </button>
+
         </div>
     `;
 }
 
-function obterDadosFormularioAluno() {
-    const nome = document.getElementById("nomeAluno").value.trim();
-    const serie = document.getElementById("serieAluno").value.trim();
-    const notasTexto = document.getElementById("notasAluno").value;
 
-    const notas = notasTexto
-        .split(",")
-        .map(nota => Number(nota.trim()));
+// ============================================================
+// COLETAR DADOS DO CADASTRO
+// ============================================================
+
+function obterDadosFormularioAluno() {
+
+    const nome =
+        document.getElementById("nomeAluno").value.trim();
+
+    const serie =
+        document.getElementById("serieAluno").value.trim();
+
+    const blocos =
+        document.querySelectorAll(
+            "#disciplinasAluno .disciplina-form"
+        );
+
+    const disciplinas = [];
+
+
+    blocos.forEach(bloco => {
+
+        const nomeDisciplina =
+            bloco
+                .querySelector(".nome-disciplina")
+                .value
+                .trim();
+
+
+        const campos =
+            bloco.querySelectorAll(
+                "input.nota-disciplina"
+            );
+
+
+        const notas = [];
+
+
+        campos.forEach(campo => {
+
+            if (campo.value !== "") {
+
+                const nota =
+                    campo.valueAsNumber;
+
+                if (!Number.isNaN(nota)) {
+                    notas.push(nota);
+                }
+            }
+
+        });
+
+
+        disciplinas.push({
+            nome: nomeDisciplina,
+            notas: notas
+        });
+
+    });
+
 
     return {
         nome,
         serie,
-        notas
+        disciplinas
     };
 }
 
+
+// ============================================================
+// EDIÇÃO
+// ============================================================
+
 function renderizarFormularioEdicao(aluno) {
+
     return `
         <div class="aluno-form">
 
             <div>
-                <label for="nomeEdicao">Nome</label>
+
+                <label for="nomeEdicao">
+                    Nome
+                </label>
+
                 <input
                     type="text"
                     id="nomeEdicao"
                     value="${aluno.nome}"
                 >
+
             </div>
 
             <div>
-                <label for="serieEdicao">Série</label>
+
+                <label for="serieEdicao">
+                    Série
+                </label>
+
                 <input
                     type="text"
                     id="serieEdicao"
                     value="${aluno.serie}"
                     placeholder="Ex: 4º ano"
                 >
+
             </div>
 
             <div>
-                <label for="notasEdicao">Notas</label>
-                <input
-                    type="text"
-                    id="notasEdicao"
-                    value="${aluno.notas.join(", ")}"
+
+                <label>Disciplinas</label>
+
+                <div id="disciplinasEdicao">
+
+                    ${aluno.disciplinas
+                        .map(criarFormularioDisciplina)
+                        .join("")}
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-adicionar-disciplina"
                 >
+                    + Adicionar disciplina
+                </button>
+
             </div>
 
             <div class="detalhes-acoes">
+
                 <button class="btn-salvar-edicao">
                     Salvar alterações
                 </button>
@@ -225,8 +477,79 @@ function renderizarFormularioEdicao(aluno) {
                 <button class="btn-cancelar-edicao">
                     Cancelar
                 </button>
+
             </div>
 
         </div>
     `;
+}
+
+
+// ============================================================
+// COLETAR DADOS DA EDIÇÃO
+// ============================================================
+
+function obterDadosFormularioEdicao() {
+
+    const nome =
+        document.getElementById("nomeEdicao").value.trim();
+
+    const serie =
+        document.getElementById("serieEdicao").value.trim();
+
+    const blocos =
+        document.querySelectorAll(
+            "#disciplinasEdicao .disciplina-form"
+        );
+
+    const disciplinas = [];
+
+
+    blocos.forEach(bloco => {
+
+        const nomeDisciplina =
+            bloco
+                .querySelector(".nome-disciplina")
+                .value
+                .trim();
+
+
+        const campos =
+            bloco.querySelectorAll(
+                "input.nota-disciplina"
+            );
+
+
+        const notas = [];
+
+
+        campos.forEach(campo => {
+
+            if (campo.value !== "") {
+
+                const nota =
+                    campo.valueAsNumber;
+
+                if (!Number.isNaN(nota)) {
+                    notas.push(nota);
+                }
+
+            }
+
+        });
+
+
+        disciplinas.push({
+            nome: nomeDisciplina,
+            notas: notas
+        });
+
+    });
+
+
+    return {
+        nome,
+        serie,
+        disciplinas
+    };
 }

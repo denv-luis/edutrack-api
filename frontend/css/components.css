@@ -373,3 +373,222 @@
 .btn-baixar-relatorio:hover {
     background-color: #1565c0;
 }
+/* ============================================================
+   DISCIPLINAS E NOTAS
+   ============================================================ */
+
+.disciplinas-detalhes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.disciplinas-detalhes h4 {
+    margin-bottom: 5px;
+    font-size: 17px;
+    color: #111827;
+}
+
+.disciplina-detalhe {
+    padding: 18px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+}
+
+.disciplina-detalhe-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.disciplina-detalhe-header strong {
+    font-size: 16px;
+    color: #111827;
+}
+
+.disciplina-detalhe p {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.disciplina-detalhe p strong {
+    color: #111827;
+}
+
+
+/* ============================================================
+   FORMULÁRIO DE DISCIPLINA
+   ============================================================ */
+
+.disciplina-form {
+    padding: 18px;
+    margin-bottom: 15px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+}
+
+.disciplina-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.disciplina-header label {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.nome-disciplina {
+    margin-bottom: 16px;
+}
+
+
+/* ============================================================
+   NOTAS
+   ============================================================ */
+
+.notas-container {
+    margin-top: 5px;
+}
+
+.notas-container > label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.notas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nota-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nota-item input {
+    flex: 1;
+    margin: 0;
+}
+
+.btn-remover-nota {
+    flex-shrink: 0;
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+    padding: 9px 12px;
+    background-color: #fff;
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-remover-nota:hover {
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+}
+
+
+/* ============================================================
+   BOTÕES DE DISCIPLINA E NOTA
+   ============================================================ */
+
+.btn-adicionar-nota,
+.btn-adicionar-disciplina {
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    padding: 9px 14px;
+    background-color: white;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-adicionar-nota {
+    margin-top: 10px;
+}
+
+.btn-adicionar-nota:hover,
+.btn-adicionar-disciplina:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.btn-adicionar-disciplina {
+    margin-top: 2px;
+}
+
+
+/* ============================================================
+   REMOVER DISCIPLINA
+   ============================================================ */
+
+.btn-remover-disciplina {
+    border: none;
+    border-radius: 7px;
+    padding: 7px 10px;
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-remover-disciplina:hover {
+    background-color: #fecaca;
+}
+
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .disciplina-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .btn-remover-disciplina {
+        width: 100%;
+    }
+
+    .nota-item {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .btn-remover-nota {
+        width: 100%;
+    }
+
+    .disciplina-detalhe-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+.nota-ajuda {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 12px;
+}
